@@ -10,7 +10,7 @@ Begin Window Window1
    HasFullScreenButton=   False
    HasMaximizeButton=   True
    HasMinimizeButton=   True
-   Height          =   498
+   Height          =   494
    ImplicitInstance=   True
    MacProcID       =   0
    MaximumHeight   =   32000
@@ -368,6 +368,117 @@ Begin Window Window1
       Value           =   ""
       Visible         =   True
       Width           =   590
+   End
+   Begin Label Label3
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   5
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "SHA Checksummer"
+      TextAlignment   =   0
+      TextColor       =   &c00000000
+      Tooltip         =   ""
+      Top             =   350
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   140
+   End
+   Begin TextField TextFieldSHA
+      AllowAutoDeactivate=   True
+      AllowFocusRing  =   True
+      AllowSpellChecking=   False
+      AllowTabs       =   False
+      BackgroundColor =   &cFFFFFF00
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Format          =   ""
+      HasBorder       =   True
+      Height          =   22
+      Hint            =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   5
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      MaximumCharactersAllowed=   0
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextAlignment   =   0
+      TextColor       =   &c00000000
+      Tooltip         =   ""
+      Top             =   372
+      Transparent     =   False
+      Underline       =   False
+      ValidationMask  =   ""
+      Visible         =   True
+      Width           =   512
+   End
+   Begin PushButton PushButtonSHA
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      Cancel          =   False
+      Caption         =   "SHA"
+      Default         =   False
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   529
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      MacButtonStyle  =   0
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Tooltip         =   ""
+      Top             =   374
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   65
    End
 End
 #tag EndWindow
@@ -2474,6 +2585,27 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function SHA_StringFilter(s As String) As String
+		  Dim i As Integer
+		  Dim a As String
+		  Dim r As String
+		  Dim f As String = "qwertyuiopasdfghjklzxcvbnm" // english language characters.
+		  
+		  s = lowercase(s)
+		  
+		  For i = 1 To len(s)
+		    a = mid(s,i,1)
+		    if (f.IndexOf(a) = -1) then
+		    else
+		      r = r + a
+		    end if
+		  Next
+		  
+		  return r
+		End Function
+	#tag EndMethod
+
 
 	#tag Note, Name = Untitled
 		The 24 seed word line numbers are taken directly from https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt:
@@ -2593,6 +2725,18 @@ End
 		  Else
 		    msgbox "Error. You need at least " + Str(UBound(a)+1) + " numbers to encrypt. You only have " + Str(UBound(b)+1) + "."
 		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButtonSHA
+	#tag Event
+		Sub Action()
+		  TextFieldSHA.Text = SHA_StringFilter(TextFieldSHA.Text)
+		  
+		  Dim s As String = Crypto.Hash(Trim(TextFieldSHA.Text), Crypto.HashAlgorithms.MD5)
+		  TextFieldSHA.Text = left(EncodeHex(s, false),20)
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
