@@ -61,6 +61,7 @@ Begin Window Window1
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   "1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16"
       TextAlignment   =   0
       TextColor       =   &c00000000
       Tooltip         =   ""
@@ -69,7 +70,6 @@ Begin Window Window1
       Underline       =   False
       UnicodeMode     =   0
       ValidationMask  =   ""
-      Value           =   "1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16"
       Visible         =   True
       Width           =   590
    End
@@ -98,13 +98,13 @@ Begin Window Window1
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   "Words 2 RawNumbers"
       TextAlignment   =   0
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   1
       Transparent     =   False
       Underline       =   False
-      Value           =   "Words 2 RawNumbers"
       Visible         =   True
       Width           =   140
    End
@@ -197,13 +197,13 @@ Begin Window Window1
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   "Encryption key"
       TextAlignment   =   0
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   144
       Transparent     =   False
       Underline       =   False
-      Value           =   "Encryption key"
       Visible         =   True
       Width           =   140
    End
@@ -244,6 +244,7 @@ Begin Window Window1
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c00000000
       Tooltip         =   "First generate a list of 24 words, then use the ""Convert"" to convert it to 24 numbers. Then paste these 24 numbers into ""encryption key"" textbox."
@@ -252,7 +253,6 @@ Begin Window Window1
       Underline       =   False
       UnicodeMode     =   0
       ValidationMask  =   ""
-      Value           =   ""
       Visible         =   True
       Width           =   590
    End
@@ -357,6 +357,7 @@ Begin Window Window1
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c00000000
       Tooltip         =   "First generate a list of 24 words, then use the ""Convert"" to convert it to 24 numbers. Then paste these 24 numbers into ""encryption key"" textbox."
@@ -365,7 +366,6 @@ Begin Window Window1
       Underline       =   False
       UnicodeMode     =   0
       ValidationMask  =   ""
-      Value           =   ""
       Visible         =   True
       Width           =   590
    End
@@ -2745,7 +2745,7 @@ End
 		  TextFieldSHA.Text = s
 		  
 		  Var hash As MemoryBlock
-		  hash = Crypto.PBKDF2("SaltValue:777", s, 3000000, 128, Crypto.HashAlgorithms.SHA512)
+		  hash = Crypto.PBKDF2("SaltValue:777", s, 30000000, 128, Crypto.HashAlgorithms.SHA512)  // approx 100 seconds
 		  Var hashValue As String = EncodeBase64(hash)
 		  s = SHA_StringFilter(hashValue,4) // makes the base64 less complex
 		  
