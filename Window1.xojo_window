@@ -2797,7 +2797,7 @@ End
 		  TextFieldSHA.Text = s
 		  
 		  Var hash As MemoryBlock
-		  hash = Crypto.PBKDF2("SaltValue:777", s, 300000, 128, Crypto.HashAlgorithms.SHA512)  // approx 100 seconds
+		  hash = Crypto.PBKDF2("SaltValue:777", s, 30000000, 128, Crypto.HashAlgorithms.SHA512)  // approx 100 seconds
 		  Var hashValue As String = EncodeBase64(hash)
 		  s = SHA_StringFilter(hashValue,4) // makes the base64 less complex
 		  
