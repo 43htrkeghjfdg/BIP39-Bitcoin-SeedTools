@@ -480,6 +480,49 @@ Begin Window Window1
       Visible         =   True
       Width           =   65
    End
+   Begin TextField TextFieldSHA2
+      AllowAutoDeactivate=   True
+      AllowFocusRing  =   True
+      AllowSpellChecking=   False
+      AllowTabs       =   False
+      BackgroundColor =   &cFFFFFF00
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Format          =   ""
+      HasBorder       =   True
+      Height          =   22
+      Hint            =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   5
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      MaximumCharactersAllowed=   0
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextAlignment   =   0
+      TextColor       =   &c00000000
+      Tooltip         =   ""
+      Top             =   397
+      Transparent     =   False
+      Underline       =   False
+      ValidationMask  =   ""
+      Visible         =   True
+      Width           =   512
+   End
 End
 #tag EndWindow
 
@@ -2739,13 +2782,22 @@ End
 #tag Events PushButtonSHA
 	#tag Event
 		Sub Action()
+		  // compare text lines
+		  If (TextFieldSHA.Text.Compare(TextFieldSHA2.Text, ComparisonOptions.CaseSensitive)=0) Then
+		    // is identical
+		  else
+		    // is not identical
+		    msgbox "Not identical"
+		    Exit sub
+		  End If
+		  
 		  Dim d As New date
 		  Dim s As String
 		  s = SHA_StringFilter(TextFieldSHA.Text)
 		  TextFieldSHA.Text = s
 		  
 		  Var hash As MemoryBlock
-		  hash = Crypto.PBKDF2("SaltValue:777", s, 30000000, 128, Crypto.HashAlgorithms.SHA512)  // approx 100 seconds
+		  hash = Crypto.PBKDF2("SaltValue:777", s, 300000, 128, Crypto.HashAlgorithms.SHA512)  // approx 100 seconds
 		  Var hashValue As String = EncodeBase64(hash)
 		  s = SHA_StringFilter(hashValue,4) // makes the base64 less complex
 		  
@@ -2753,6 +2805,7 @@ End
 		  //s = SHA_StringFilter(EncodeBase64(s)) // makes the base64 less complex
 		  
 		  TextFieldSHA.Text = uppercase(left(s,24))
+		  TextFieldSHA2.Text = TextFieldSHA.Text
 		  
 		  dim dd As New date
 		  
