@@ -2590,7 +2590,7 @@ End
 		  Dim i As Integer
 		  Dim a As String
 		  Dim r As String
-		  Dim f As String = "qwertyuiopasdfghjklzxcvbnm1234567890" // english language characters.
+		  Dim f As String = "qwertyuipasdfghjklzxcvbnm123456789" // english language characters.
 		  Dim c As integer = -1
 		  
 		  s = lowercase(s)
